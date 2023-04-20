@@ -42,7 +42,7 @@ const pausa = async() => {
         {
             type: 'input',
             name: 'enter',
-            message: `Presione ${ 'ENTER'.magenta.bold } para continuar`
+            message: `Presione ${ 'ENTER'.green.underline.bold } para continuar`
         }
     ]
 
@@ -59,7 +59,7 @@ const leerInput = async( message ) => {
             message,
             validate( value ) {
                 if ( value.length === 0 ) {
-                    return 'Por favor ingrese un valor';
+                    return 'Por favor ingrese una ciudad valida';
                 }
                 return true;
             }

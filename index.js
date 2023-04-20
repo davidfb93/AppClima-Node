@@ -8,7 +8,7 @@ const Busquedas = require("./models/busquedas");
 
 const main = async() => {
 
-    const busquqedas = new Busquedas();
+    const busquedas = new Busquedas();
     let opt;
 
     do{
@@ -18,7 +18,10 @@ const main = async() => {
             case 1:
                 //Mostrar mensaje
                 const lugar = await leerInput('Ciudad: ');
-                console.log(lugar);
+                await busquedas.ciudad(lugar);
+
+
+
                 //TODO Buscar lugares
                 //TODO Seleccionar el lugar
                 //TODO Datos clima
