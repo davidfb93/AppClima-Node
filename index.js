@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { leerInput, inquirerMenu, pausa, listarLugares} = require("./helpers/inquirer");
+const { leerInput, inquirerMenu, pausa, listarLugares } = require("./helpers/inquirer");
 const Busquedas = require("./models/busquedas");
 
 const main = async() => {
@@ -21,18 +21,33 @@ const main = async() => {
 
                 //Seleccionar el lugar
                 const idSeleccionado = await listarLugares(lugares);
+                if ( idSeleccionado === '0') continue;
+
                 const lugarSel = lugares.find( l => l.id === idSeleccionado);
 
-                //TODO Datos clima
-                //TODO Mostrar resultados
-                console.log('\Información de la ciudad\n'.cyan.underline.bold);
-                console.log('ciudad:', lugarSel.nombre);
+                // Guardar en DB
+                busquedas.agregarHistorial( lugarSel.nombre );
+
+                //Datos clima
+                const clima = await busquedas.climalugar( lugarSel.lat, lugarSel.lng );
+                
+                //Mostrar resultados
+                console.clear();
+                console.log();
+                console.log('\Información de la ciudad\n'.green.underline.bold.bgBlue);
+                console.log('ciudad:', lugarSel.nombre.green);
                 console.log('lat:', lugarSel.lat);
                 console.log('lng:', lugarSel.lng);
-                console.log('temperatura:',);
-                console.log('mínima:',);
-                console.log('máxima:',);
-
+                console.log('temperatura:', clima.temp);
+                console.log('mínima:', clima.min);
+                console.log('máxima:', clima.max);
+                console.log('Cómo está el clima:', clima.desc.cyan);
+            break;
+            case 2:
+            busquedas.HistorialCapitalizado.forEach( (lugar, i) => {
+                const idx = `${i + 1}.`.green;
+                console.log(`${idx} ${lugar}`);
+            });
             break;
 
         }
